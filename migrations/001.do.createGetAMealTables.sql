@@ -44,7 +44,9 @@ name	varchar(50),
 description
 varchar
 (255),
-price	INTEGER
+price	INTEGER,
+image varchar
+(255)
 );
 
 CREATE TABLE orders	(
