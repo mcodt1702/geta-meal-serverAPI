@@ -6,8 +6,9 @@ const helmet = require("helmet");
 const { NODE_ENV } = require("./config");
 const app = express();
 const morganOption = NODE_ENV === "production" ? "tiny" : "common";
-
-const ConsumersRouter = require("./Routers/consumerRouter");
+const ProvidersRouter = require("./Routers/ProvidersRouter");
+const ConsumersRouter = require("./Routers/ConsumersRouter");
+const DishesRouter = require("./Routers/DishesRouter");
 app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors());
@@ -15,7 +16,8 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.send("Hello I'm geta-meal!");
 });
-
+app.use("/dishes", DishesRouter);
+app.use("/providers", ProvidersRouter);
 app.use("/consumers", ConsumersRouter);
 // app.use(function errorHandler(error, req, res, next) {
 //   let response;

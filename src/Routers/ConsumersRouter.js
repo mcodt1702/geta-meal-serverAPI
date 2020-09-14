@@ -35,17 +35,14 @@ ConsumerRouter.route("/")
       }
     }
 
-    ConsumersService.insertConsumer(
-      req.app
-        .get("db", newConsumer)
-        .then((consumer) => {
-          res
-            .status(201)
-            .location(path.posix.join(req.originalUrl, `/${consumer.id}`))
-            .json(serializeConsumer(consumer));
-        })
-        .catch(next)
-    );
+    ConsumersService.insertConsumer(req.app.get("db"), newConsumer)
+      .then((consumer) => {
+        res
+          .status(201)
+          .location(path.posix.join(req.originalUrl, `/${consumer.id}`))
+          .json(serializeConsumer(consumer));
+      })
+      .catch(next);
   });
 
 module.exports = ConsumerRouter;

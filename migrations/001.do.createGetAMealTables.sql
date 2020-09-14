@@ -44,7 +44,8 @@ name	varchar(50),
 description
 varchar
 (255),
-price	INTEGER,
+price	NUMERIC
+(8,2),
 image varchar
 (255)
 );
