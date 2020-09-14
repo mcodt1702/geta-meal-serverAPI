@@ -9,6 +9,7 @@ const morganOption = NODE_ENV === "production" ? "tiny" : "common";
 const ProvidersRouter = require("./Routers/ProvidersRouter");
 const ConsumersRouter = require("./Routers/ConsumersRouter");
 const DishesRouter = require("./Routers/DishesRouter");
+const OrdersRouter = require("./Routers/OrdersRouter");
 app.use(morgan(morganOption));
 app.use(helmet());
 
@@ -23,6 +24,7 @@ app.use(
 app.get("/", (req, res) => {
   res.send("Hello I'm geta-meal!");
 });
+app.use("/orders", OrdersRouter);
 app.use("/dishes", DishesRouter);
 app.use("/providers", ProvidersRouter);
 app.use("/consumers", ConsumersRouter);
