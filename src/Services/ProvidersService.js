@@ -4,6 +4,7 @@ const ProvidersService = {
   getAllProviders(knex) {
     return knex.select("*").from("providers");
   },
+
   insertProviders(knex, newProvider) {
     return knex
       .insert(newProvider)
