@@ -3,6 +3,8 @@ const ConsumersService = require("../Services/ConsumersService");
 const ConsumerRouter = express.Router();
 const jsonParser = express.json();
 const path = require("path");
+const { requireAuth } = require("../middleWare/basic-auth");
+const bcrypt = require("bcryptjs");
 
 serializeConsumer = (consumer) => ({
   id: consumer.id,
@@ -15,6 +17,7 @@ serializeConsumer = (consumer) => ({
 });
 
 ConsumerRouter.route("/")
+  //.all(requireAuth)
   .get((req, res, next) => {
     ConsumersService.getAllConsumers(req.app.get("db"))
       .then((consumer) => {
@@ -23,8 +26,11 @@ ConsumerRouter.route("/")
       .catch(next);
   })
 
-  .post(jsonParser, (req, res, next) => {
-    const { name, address, zip, phone, email, password } = req.body;
+  .post(jsonParser, async (req, res, next) => {
+    const { name, address, zip, phone, email } = req.body;
+    const hashedpassword = await bcrypt.hash(req.body.password, 10);
+    password = hashedpassword;
+
     const newConsumer = { name, address, zip, phone, email, password };
 
     for (const [key, value] of Object.entries(newConsumer)) {
@@ -44,5 +50,7 @@ ConsumerRouter.route("/")
       })
       .catch(next);
   });
+
+ConsumerRouter.route("/login");
 
 module.exports = ConsumerRouter;

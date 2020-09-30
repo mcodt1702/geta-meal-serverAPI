@@ -5,7 +5,7 @@ const jsonParser = express.json();
 const path = require("path");
 const { serialize } = require("v8");
 
-serializeDishes = (order) => ({
+serializeOrders = (order) => ({
   id: order.id,
   provider_id: order.provider_id,
   consumer_id: order.consumer_id,
@@ -17,7 +17,7 @@ OrdersRouter.route("/")
   .get((req, res, next) => {
     OrdersService.getAllOrders(req.app.get("db"))
       .then((dish) => {
-        res.json(dish.map(serializeDishes));
+        res.json(dish.map(serializeOrders));
       })
       .catch(next);
   })
@@ -38,7 +38,7 @@ OrdersRouter.route("/")
         res
           .status(201)
           .location(path.posix.join(req.originalUrl, `/${order.id}`))
-          .json(serializeDishes(order));
+          .json(serializeOrders(order));
       })
       .catch(next);
   });

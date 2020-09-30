@@ -11,7 +11,7 @@ email	varchar
 
 (25),
 password	varchar
-(25)
+(255)
 );
 
 
@@ -29,7 +29,7 @@ name	varchar
 email	varchar
 (50),
 password	varchar
-(25),
+(255),
 type	varchar
 (25)
 

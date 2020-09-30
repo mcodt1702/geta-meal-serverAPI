@@ -3,7 +3,7 @@ const DishesService = require("../Services/DishesService");
 const DishesRouter = express.Router();
 const jsonParser = express.json();
 const path = require("path");
-const { serialize } = require("v8");
+const { requireAuth } = require("../middleware/basic-auth");
 
 serializeDishes = (dish) => ({
   id: dish.id,
@@ -14,13 +14,15 @@ serializeDishes = (dish) => ({
 });
 
 DishesRouter.route("/")
+
   .get((req, res, next) => {
     DishesService.getAllDishes(req.app.get("db"))
       .then((dish) => {
-        res.json(dish.map(serializeDishes));
+        res.json(dish);
       })
       .catch(next);
   })
+
   .post(jsonParser, (req, res, next) => {
     const { provider_id, name, description, price } = req.body;
     const newDish = { provider_id, name, description, price };

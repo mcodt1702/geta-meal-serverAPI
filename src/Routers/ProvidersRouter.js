@@ -3,6 +3,7 @@ const ProvidersService = require("../Services/ProvidersService");
 const ProvidersRouter = express.Router();
 const jsonParser = express.json();
 const path = require("path");
+const bcrypt = require("bcryptjs");
 
 serializeProvider = (provider) => ({
   id: provider.id,
@@ -24,8 +25,11 @@ ProvidersRouter.route("/")
       .catch(next);
   })
 
-  .post(jsonParser, (req, res, next) => {
-    const { name, address, zip, phone, email, password, type } = req.body;
+  .post(jsonParser, async (req, res, next) => {
+    const { name, address, zip, phone, email, type } = req.body;
+    const hashedpassword = await bcrypt.hash(req.body.password, 10);
+    password = hashedpassword;
+
     const newProvider = { name, address, zip, phone, email, password, type };
 
     for (const [key, value] of Object.entries(newProvider)) {

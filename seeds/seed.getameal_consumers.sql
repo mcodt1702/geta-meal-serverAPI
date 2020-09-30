@@ -8,7 +8,7 @@ VALUES
 
     (
 
-        6,
+        1,
         'joe Smith',
 
 
@@ -19,11 +19,11 @@ VALUES
 
         'test@test.com',
 
-        'test1234Q'
+        '$2a$10$2A43AskmitmyY9rDZsmDHO1ub8dzMxCbmJT8HvUOkGSFXjQjgbU.6'
 ),
     (
 
-        7,
+        2,
         'Mike Caplan',
 
 
@@ -34,5 +34,5 @@ VALUES
 
         'mike@test.com',
 
-        'mike1234Q'
+        '$2a$10$wVrzN5.EPPbWRFZAkI5mIujCKTpOo9gCCB/ZHdxn1PKAYJcMXUl1y'
 );
