@@ -4,6 +4,7 @@ const ProvidersRouter = express.Router();
 const jsonParser = express.json();
 const path = require("path");
 const bcrypt = require("bcryptjs");
+const { requireAuth } = require("../middleWare/jwt-auth");
 
 serializeProvider = (provider) => ({
   id: provider.id,

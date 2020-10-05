@@ -14,6 +14,10 @@ const OrdersService = {
         return rows[0];
       });
   },
+
+  updateStatus(knex, idUpdate) {
+    return knex("orders").where("id", idUpdate).update({ status: "pending" });
+  },
 };
 
 module.exports = OrdersService;

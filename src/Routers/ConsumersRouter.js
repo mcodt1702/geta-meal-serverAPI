@@ -17,7 +17,7 @@ serializeConsumer = (consumer) => ({
 });
 
 ConsumerRouter.route("/")
-  //.all(requireAuth)
+
   .get((req, res, next) => {
     ConsumersService.getAllConsumers(req.app.get("db"))
       .then((consumer) => {
@@ -28,7 +28,7 @@ ConsumerRouter.route("/")
 
   .post(jsonParser, async (req, res, next) => {
     const { name, address, zip, phone, email } = req.body;
-    const hashedpassword = await bcrypt.hash(req.body.password, 10);
+    const hashedpassword = await bcrypt.hash(req.body.password, 12);
     password = hashedpassword;
 
     const newConsumer = { name, address, zip, phone, email, password };

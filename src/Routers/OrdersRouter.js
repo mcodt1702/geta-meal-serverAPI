@@ -4,6 +4,7 @@ const OrdersRouter = express.Router();
 const jsonParser = express.json();
 const path = require("path");
 const { serialize } = require("v8");
+const { requireAuth } = require("../middleWare/jwt-auth");
 
 serializeOrders = (order) => ({
   id: order.id,
@@ -22,9 +23,10 @@ OrdersRouter.route("/")
       .catch(next);
   })
 
-  .post(jsonParser, (req, res, next) => {
-    const { provider_id, consumer_id, status } = req.body;
-    const newOrder = { provider_id, consumer_id, status };
+  .post(requireAuth, jsonParser, (req, res, next) => {
+    const { provider_id, status } = req.body;
+
+    const newOrder = { provider_id, status };
     for (const [key, value] of Object.entries(newOrder)) {
       if (value == null) {
         return res
@@ -32,7 +34,7 @@ OrdersRouter.route("/")
           .json({ error: { message: `Missing '${key}' in request body` } });
       }
     }
-
+    newOrder.consumer_id = req.user.id;
     OrdersService.insertOrders(req.app.get("db"), newOrder)
       .then((order) => {
         res
@@ -42,5 +44,23 @@ OrdersRouter.route("/")
       })
       .catch(next);
   });
+
+OrdersRouter.route("/status").patch(
+  requireAuth,
+  jsonParser,
+  (req, res, next) => {
+    const id = req.body.order_id;
+
+    OrdersService.updateStatus(req.app.get("db"), id)
+      .then((order) => {
+        res
+          .status(202)
+          .location(path.posix.join(req.originalUrl, `/${order.id}`))
+          .json(serializeOrders(order));
+      })
+
+      .catch(next);
+  }
+);
 
 module.exports = OrdersRouter;
