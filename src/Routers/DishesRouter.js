@@ -3,8 +3,6 @@ const DishesService = require("../Services/DishesService");
 const DishesRouter = express.Router();
 const jsonParser = express.json();
 const path = require("path");
-const { requireAuth } = require("../middleware/basic-auth");
-
 serializeDishes = (dish) => ({
   id: dish.id,
   provider_id: dish.provider_id,
