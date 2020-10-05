@@ -11,11 +11,9 @@ const ConsumersRouter = require("./Routers/ConsumersRouter");
 const DishesRouter = require("./Routers/DishesRouter");
 const OrdersRouter = require("./Routers/OrdersRouter");
 const OrderItemsRouter = require("./Routers/OrderItemsRouter");
-const { requireAuth } = require("./middleware/basic-auth");
 const authRouter = require("./Routers/auth-router");
 app.use(morgan(morganOption));
 app.use(helmet());
-app.all(requireAuth);
 app.use(cors());
 
 app.get("/", (req, res) => {

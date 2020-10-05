@@ -3,7 +3,6 @@ const ConsumersService = require("../Services/ConsumersService");
 const ConsumerRouter = express.Router();
 const jsonParser = express.json();
 const path = require("path");
-const { requireAuth } = require("../middleWare/basic-auth");
 const bcrypt = require("bcryptjs");
 
 serializeConsumer = (consumer) => ({
