@@ -33,6 +33,7 @@ app.use((error, req, res, next) => {
   } else {
     response = { error };
   }
+  console.log(error);
   res.status(500).json(response);
 });
 
