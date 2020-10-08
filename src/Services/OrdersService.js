@@ -15,8 +15,11 @@ const OrdersService = {
       });
   },
 
-  updateStatus(knex, idUpdate) {
-    return knex("orders").where("id", idUpdate).update({ status: "pending" });
+  updateStatus(knex, order_id, updateStatus) {
+    return knex("orders")
+      .where({ id: order_id })
+      .update(updateStatus, (returning = true))
+      .returning("*");
   },
 };
 

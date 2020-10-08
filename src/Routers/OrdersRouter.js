@@ -49,16 +49,21 @@ OrdersRouter.route("/status").patch(
   requireAuth,
   jsonParser,
   (req, res, next) => {
-    const id = req.body.order_id;
+    const { order_id, status } = req.body;
+    const updateStatus = { status };
 
-    OrdersService.updateStatus(req.app.get("db"), id)
-      .then((order) => {
-        res
-          .status(202)
-          .location(path.posix.join(req.originalUrl, `/${order.id}`))
-          .json(serializeOrders(order));
+    const numberOfValues = Object.values(todoToUpdate).filter(Boolean).length;
+    if (numberOfValues === 0)
+      return res.status(400).json({
+        error: {
+          message: `Request body must content either 'title' or 'completed'`,
+        },
+      });
+
+    OrdersService.updateStatus(req.app.get("db"), order_id, updateStatus)
+      .then((updatedStatus) => {
+        res.status(200).json(serializeOrders(updatedStatus[0]));
       })
-
       .catch(next);
   }
 );

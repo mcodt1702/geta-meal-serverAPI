@@ -3,6 +3,8 @@ const DishesService = require("../Services/DishesService");
 const DishesRouter = express.Router();
 const jsonParser = express.json();
 const path = require("path");
+const { requireAuth } = require("../middleWare/jwt-auth");
+
 serializeDishes = (dish) => ({
   id: dish.id,
   provider_id: dish.provider_id,
@@ -21,7 +23,7 @@ DishesRouter.route("/")
       .catch(next);
   })
 
-  .post(jsonParser, (req, res, next) => {
+  .post(jsonParser, requireAuth, (req, res, next) => {
     const { provider_id, name, description, price } = req.body;
     const newDish = { provider_id, name, description, price };
     for (const [key, value] of Object.entries(newDish)) {
@@ -41,5 +43,14 @@ DishesRouter.route("/")
       })
       .catch(next);
   });
+
+DishesRouter.route("/id").delete(requireAuth, (req, res, next) => {
+  const { id } = req.body;
+  DishesService.deleteDish(req.app.get("db"), id)
+    .then((numRowsAffected) => {
+      res.status(204).end();
+    })
+    .catch(next);
+});
 
 module.exports = DishesRouter;
