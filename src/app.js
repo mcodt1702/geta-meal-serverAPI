@@ -17,7 +17,7 @@ app.use(helmet());
 app.use(cors());
 
 app.get("/", (req, res) => {
-  res.send("Hello I'm geta-meal!");
+  res.send("Hello geta-meal!");
 });
 app.use("/login", authRouter);
 app.use("/orderItems", OrderItemsRouter);
