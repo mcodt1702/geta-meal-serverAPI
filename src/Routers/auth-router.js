@@ -8,7 +8,6 @@ authRouter.post("/", jsonParser, (req, res, next) => {
   const loginUser = { email, password };
 
   if (user_type === "consumer") {
-    console.log(user_type);
     for (const [key, value] of Object.entries(loginUser))
       if (value == null)
         return res.status(400).json({
