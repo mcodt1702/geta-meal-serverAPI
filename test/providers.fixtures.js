@@ -1,7 +1,6 @@
 function makeTestProviders() {
   return [
     {
-      id: 1,
       name: "Joes Pizza",
       address: "2020 marine rd",
       zip: 12099,

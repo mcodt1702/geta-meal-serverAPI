@@ -31,21 +31,11 @@ describe("Auth-Router Endpoints", function () {
     it(`responds 200 and JWT auth token using secret when valid credentials`, () => {
       const userValidCreds = {
         email: testProviders[0].email,
-        password: testProviders[0].password,
+        password: "joe33",
         user_type: "provider",
       };
 
-      const expectedToken = jwt.sign(
-        { user_id: testProviders[0].id }, // payload
-        process.env.JWT_SECRET,
-        {
-          subject: testProviders[0].email,
-          algorithm: "HS256",
-        }
-      );
-      return supertest(app).post("/login").send(userValidCreds).expect(200, {
-        authToken: expectedToken,
-      });
+      return supertest(app).post("/login").send(userValidCreds).expect(200);
     });
   });
 });

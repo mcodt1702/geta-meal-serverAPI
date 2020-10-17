@@ -16,9 +16,11 @@ describe("Providers Endpoints", function () {
 
   after("disconnect from db", () => db.destroy());
 
-  before("clean the table", () => db.raw("TRUNCATE TABLE providers CASCADE"));
+  before("clean the table", () =>
+    db.raw("TRUNCATE TABLE providers RESTART IDENTITY CASCADE")
+  );
   afterEach("clean the table", () =>
-    db.raw("TRUNCATE TABLE providers CASCADE")
+    db.raw("TRUNCATE TABLE providers RESTART IDENTITY CASCADE")
   );
 
   context("Given there are providers in the database", () => {

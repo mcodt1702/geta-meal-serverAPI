@@ -1,7 +1,6 @@
 function makeTestConsumers() {
   return [
     {
-      id: 1,
       name: "joe Smith",
       address: "2020 marine rd",
       zip: 12099,

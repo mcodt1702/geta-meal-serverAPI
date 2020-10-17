@@ -19,10 +19,12 @@ describe("Orders Endpoints", function () {
   after("disconnect from db", () => db.destroy());
 
   beforeEach("clean the table", () =>
-    db.raw("TRUNCATE TABLE orders, consumers, providers CASCADE")
+    db.raw(
+      "TRUNCATE TABLE orders, consumers, providers RESTART IDENTITY CASCADE"
+    )
   );
   afterEach("clean the table", () =>
-    db.raw("TRUNCATE TABLE providers CASCADE")
+    db.raw("TRUNCATE TABLE providers RESTART IDENTITY CASCADE")
   );
 
   context("Given there are orders in the database", () => {

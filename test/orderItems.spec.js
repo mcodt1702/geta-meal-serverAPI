@@ -19,10 +19,12 @@ describe("OrderItems Endpoints", function () {
   after("disconnect from db", () => db.destroy());
 
   beforeEach("clean the table", () =>
-    db.raw("TRUNCATE TABLE orders, order_items,consumers, providers CASCADE")
+    db.raw(
+      "TRUNCATE TABLE orders, order_items,consumers, providers RESTART IDENTITY CASCADE"
+    )
   );
   afterEach("clean the table", () =>
-    db.raw("TRUNCATE TABLE order_items CASCADE")
+    db.raw("TRUNCATE TABLE order_items RESTART IDENTITY CASCADE")
   );
 
   context("Given there are orders in the database", () => {
@@ -50,7 +52,7 @@ describe("OrderItems Endpoints", function () {
               db
                 .into("dishes")
                 .insert(testDishes)
-                .then(() =>
+                .then((res) =>
                   db
                     .into("orders")
                     .insert(testOrders)

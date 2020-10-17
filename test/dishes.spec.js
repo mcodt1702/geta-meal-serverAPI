@@ -17,8 +17,12 @@ describe("Dishes Endpoints", function () {
 
   after("disconnect from db", () => db.destroy());
 
-  before("clean the table", () => db.raw("TRUNCATE TABLE dishes CASCADE"));
-  afterEach("clean the table", () => db.raw("TRUNCATE TABLE dishes CASCADE"));
+  before("clean the table", () =>
+    db.raw("TRUNCATE TABLE dishes, providers RESTART IDENTITY CASCADE")
+  );
+  afterEach("clean the table", () =>
+    db.raw("TRUNCATE TABLE dishes, providers RESTART IDENTITY CASCADE")
+  );
 
   context("Given there are dishes in the database", () => {
     let testDishes = makeTestDishes();
